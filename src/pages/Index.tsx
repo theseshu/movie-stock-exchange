@@ -1,13 +1,45 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Layout } from '@/components/Layout';
+import { TradingView } from '@/components/TradingView';
+import { Portfolio } from '@/components/Portfolio';
+import { AdminPanel } from '@/components/AdminPanel';
+import { TradeHistory } from '@/components/TradeHistory';
+import { useUserStore } from '@/hooks/useUser';
 
 const Index = () => {
+  const { currentUser } = useUserStore();
+  
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <Layout>
+      <Tabs defaultValue="trade" className="w-full">
+        <TabsList className="grid w-full grid-cols-4">
+          <TabsTrigger value="trade">Trade</TabsTrigger>
+          <TabsTrigger value="portfolio">Portfolio</TabsTrigger>
+          <TabsTrigger value="history">All Trades</TabsTrigger>
+          {currentUser?.role === 'admin' && (
+            <TabsTrigger value="admin">Admin</TabsTrigger>
+          )}
+        </TabsList>
+        
+        <TabsContent value="trade">
+          <TradingView />
+        </TabsContent>
+        
+        <TabsContent value="portfolio">
+          <Portfolio />
+        </TabsContent>
+        
+        <TabsContent value="history">
+          <TradeHistory />
+        </TabsContent>
+        
+        {currentUser?.role === 'admin' && (
+          <TabsContent value="admin">
+            <AdminPanel />
+          </TabsContent>
+        )}
+      </Tabs>
+    </Layout>
   );
 };
 
