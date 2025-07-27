@@ -5,21 +5,17 @@ import { Header } from '@/components/Header';
 
 interface LayoutProps {
   children: ReactNode;
-  activeTab?: string;
-  onTabChange?: (tab: string) => void;
 }
 
-export function Layout({ children, activeTab = 'trade', onTabChange }: LayoutProps) {
-  const handleTabChange = onTabChange || (() => {});
-  
+export function Layout({ children }: LayoutProps) {
   return (
     <SidebarProvider defaultOpen={true}>
       <div className="min-h-screen flex w-full bg-background">
-        <AppSidebar activeTab={activeTab} onTabChange={handleTabChange} />
+        <AppSidebar />
         <div className="flex-1 flex flex-col">
           <Header />
-          <main className="flex-1 overflow-auto">
-            <div className="container max-w-screen-2xl mx-auto p-6">
+          <main className="flex-1 overflow-hidden">
+            <div className="container max-w-screen-2xl p-6">
               {children}
             </div>
           </main>
