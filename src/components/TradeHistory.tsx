@@ -33,9 +33,7 @@ export function TradeHistory({ movieId }: TradeHistoryProps) {
       .from('trades')
       .select(`
         *,
-        movies(symbol, title),
-        buyer:demo_users!trades_buyer_id_fkey(display_name),
-        seller:demo_users!trades_seller_id_fkey(display_name)
+        movies(symbol, title)
       `)
       .order('executed_at', { ascending: false })
       .limit(20);
@@ -71,8 +69,6 @@ export function TradeHistory({ movieId }: TradeHistoryProps) {
                 <TableHead>Price</TableHead>
                 <TableHead>Quantity</TableHead>
                 <TableHead>Total</TableHead>
-                <TableHead>Buyer</TableHead>
-                <TableHead>Seller</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -92,8 +88,6 @@ export function TradeHistory({ movieId }: TradeHistoryProps) {
                   <TableCell>${trade.price.toFixed(2)}</TableCell>
                   <TableCell>{trade.quantity}</TableCell>
                   <TableCell>${(trade.price * trade.quantity).toFixed(2)}</TableCell>
-                  <TableCell>{trade.buyer?.display_name}</TableCell>
-                  <TableCell>{trade.seller?.display_name}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
