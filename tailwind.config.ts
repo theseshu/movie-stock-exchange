@@ -17,8 +17,23 @@ export default {
 				'2xl': '1400px'
 			}
 		},
-		extend: {
-			colors: {
+    extend: {
+      fontFamily: {
+        'sans': ['Inter', 'system-ui', 'sans-serif'],
+        'display': ['Playfair Display', 'serif'],
+        'body': ['Inter', 'system-ui', 'sans-serif'],
+      },
+      fontSize: {
+        'xs': ['0.75rem', { lineHeight: '1.5', letterSpacing: '0.025em' }],
+        'sm': ['0.875rem', { lineHeight: '1.5', letterSpacing: '0.025em' }],
+        'base': ['1rem', { lineHeight: '1.6', letterSpacing: '0.01em' }],
+        'lg': ['1.125rem', { lineHeight: '1.6', letterSpacing: '0.01em' }],
+        'xl': ['1.25rem', { lineHeight: '1.5', letterSpacing: '0.01em' }],
+        '2xl': ['1.5rem', { lineHeight: '1.4', letterSpacing: '-0.01em' }],
+        '3xl': ['1.875rem', { lineHeight: '1.3', letterSpacing: '-0.02em' }],
+        '4xl': ['2.25rem', { lineHeight: '1.2', letterSpacing: '-0.03em' }],
+      },
+      colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
