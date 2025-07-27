@@ -2,51 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
   :root {
     --background: 0 0% 100%;
     --foreground: 220 9% 13%;
-
     --card: 0 0% 100%;
     --card-foreground: 220 9% 13%;
-
     --popover: 0 0% 100%;
     --popover-foreground: 220 9% 13%;
-
     --primary: 158 64% 52%;
     --primary-foreground: 0 0% 100%;
-
     --secondary: 220 14% 96%;
     --secondary-foreground: 220 9% 13%;
-
     --muted: 220 14% 96%;
     --muted-foreground: 220 9% 46%;
-
     --accent: 158 64% 95%;
     --accent-foreground: 158 64% 11%;
-
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-
     --border: 220 13% 91%;
     --input: 220 13% 91%;
     --ring: 158 64% 52%;
-
-    --success: 158 64% 52%;
-    --success-foreground: 0 0% 100%;
-
-    --warning: 38 92% 50%;
-    --warning-foreground: 0 0% 100%;
-
-    --info: 221 83% 53%;
-    --info-foreground: 0 0% 100%;
-
     --radius: 0.5rem;
-
     --sidebar-background: 0 0% 100%;
     --sidebar-foreground: 220 9% 13%;
     --sidebar-primary: 158 64% 52%;
@@ -55,42 +32,28 @@ All colors MUST be HSL.
     --sidebar-accent-foreground: 158 64% 11%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 158 64% 52%;
-
-    --gradient-primary: linear-gradient(135deg, hsl(158 64% 52%), hsl(158 64% 42%));
-    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 100%), hsl(158 64% 98%));
-    --shadow-elegant: 0 4px 20px -4px hsl(158 64% 52% / 0.1);
-    --shadow-card: 0 1px 3px 0 hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
   }
 
   .dark {
     --background: 220 13% 9%;
     --foreground: 0 0% 95%;
-
     --card: 220 13% 11%;
     --card-foreground: 0 0% 95%;
-
     --popover: 220 13% 11%;
     --popover-foreground: 0 0% 95%;
-
     --primary: 158 64% 52%;
     --primary-foreground: 0 0% 100%;
-
     --secondary: 220 13% 15%;
     --secondary-foreground: 0 0% 95%;
-
     --muted: 220 13% 15%;
     --muted-foreground: 220 9% 65%;
-
     --accent: 220 13% 15%;
     --accent-foreground: 0 0% 95%;
-
     --destructive: 0 75% 60%;
     --destructive-foreground: 0 0% 100%;
-
     --border: 220 13% 15%;
     --input: 220 13% 15%;
     --ring: 158 64% 52%;
-
     --sidebar-background: 220 13% 9%;
     --sidebar-foreground: 0 0% 95%;
     --sidebar-primary: 158 64% 52%;
@@ -106,7 +69,6 @@ All colors MUST be HSL.
   * {
     @apply border-border;
   }
-
   body {
     @apply bg-background text-foreground;
   }
