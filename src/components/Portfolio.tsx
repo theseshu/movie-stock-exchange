@@ -22,7 +22,7 @@ export function Portfolio({ userId }: PortfolioProps) {
       fetchPortfolio();
       
       // Subscribe to portfolio changes
-      const channel = supabase
+      const portfolioChannel = supabase
         .channel('portfolio-changes')
         .on('postgres_changes', 
           { event: '*', schema: 'public', table: 'portfolios', filter: `user_id=eq.${activeUserId}` },
@@ -30,8 +30,23 @@ export function Portfolio({ userId }: PortfolioProps) {
         )
         .subscribe();
 
+      // Also subscribe to trades to get real-time updates when new trades happen
+      const tradesChannel = supabase
+        .channel('trades-changes')
+        .on('postgres_changes', 
+          { event: 'INSERT', schema: 'public', table: 'trades' },
+          (payload) => {
+            // Refresh portfolio if this trade involves the current user
+            if (payload.new.buyer_id === activeUserId || payload.new.seller_id === activeUserId) {
+              fetchPortfolio();
+            }
+          }
+        )
+        .subscribe();
+
       return () => {
-        supabase.removeChannel(channel);
+        supabase.removeChannel(portfolioChannel);
+        supabase.removeChannel(tradesChannel);
       };
     }
   }, [activeUserId]);
