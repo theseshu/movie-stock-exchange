@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Movie } from '@/types';
@@ -6,9 +5,7 @@ import { MovieCard } from './MovieCard';
 import { OrderForm } from './OrderForm';
 import { OrderBook } from './OrderBook';
 import { TradeHistory } from './TradeHistory';
-import { StockChart } from './StockChart';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 export function TradingView() {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -71,45 +68,27 @@ export function TradingView() {
 
       {/* Trading Dialog */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>
-              {selectedMovie?.title} ({selectedMovie?.symbol})
+              Trade {selectedMovie?.title} ({selectedMovie?.symbol})
             </DialogTitle>
           </DialogHeader>
           
           {selectedMovie && (
-            <Tabs defaultValue="chart" className="w-full">
-              <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="chart">Price Chart</TabsTrigger>
-                <TabsTrigger value="trade">Trade</TabsTrigger>
-                <TabsTrigger value="history">History</TabsTrigger>
-              </TabsList>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="space-y-6">
+                <OrderForm 
+                  movie={selectedMovie}
+                  onOrderPlaced={handleOrderPlaced}
+                />
+                <OrderBook movieId={selectedMovie.id} />
+              </div>
               
-              <TabsContent value="chart" className="mt-4">
-                <StockChart movie={selectedMovie} />
-              </TabsContent>
-              
-              <TabsContent value="trade" className="mt-4">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  <div className="space-y-6">
-                    <OrderForm 
-                      movie={selectedMovie}
-                      onOrderPlaced={handleOrderPlaced}
-                    />
-                    <OrderBook movieId={selectedMovie.id} />
-                  </div>
-                  
-                  <div>
-                    <TradeHistory movieId={selectedMovie.id} />
-                  </div>
-                </div>
-              </TabsContent>
-              
-              <TabsContent value="history" className="mt-4">
+              <div>
                 <TradeHistory movieId={selectedMovie.id} />
-              </TabsContent>
-            </Tabs>
+              </div>
+            </div>
           )}
         </DialogContent>
       </Dialog>
