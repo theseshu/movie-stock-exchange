@@ -53,45 +53,71 @@ export function TradeHistory({ movieId }: TradeHistoryProps) {
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Trade History</CardTitle>
+    <Card className="premium-card border-border/30">
+      <CardHeader className="border-b border-border/30">
+        <CardTitle className="text-2xl font-playfair font-bold premium-text flex items-center gap-3">
+          <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
+            <span className="text-sm">📊</span>
+          </div>
+          Trade History
+        </CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-6">
         {trades.length === 0 ? (
-          <p className="text-sm text-muted-foreground">No trades yet</p>
+          <div className="text-center py-12">
+            <div className="w-16 h-16 bg-muted rounded-full mx-auto mb-4 flex items-center justify-center">
+              <span className="text-2xl opacity-50">📈</span>
+            </div>
+            <p className="text-muted-foreground text-lg">No trades yet</p>
+            <p className="text-muted-foreground text-sm mt-2">Be the first to make a trade!</p>
+          </div>
         ) : (
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Time</TableHead>
-                {!movieId && <TableHead>Movie</TableHead>}
-                <TableHead>Price</TableHead>
-                <TableHead>Quantity</TableHead>
-                <TableHead>Total</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {trades.map((trade: any) => (
-                <TableRow key={trade.id}>
-                  <TableCell className="text-xs">
-                    {new Date(trade.executed_at).toLocaleTimeString()}
-                  </TableCell>
-                  {!movieId && (
-                    <TableCell>
-                      <div>
-                        <div className="font-medium">{trade.movies?.title}</div>
-                        <div className="text-xs text-muted-foreground">{trade.movies?.symbol}</div>
-                      </div>
-                    </TableCell>
-                  )}
-                  <TableCell>${trade.price.toFixed(2)}</TableCell>
-                  <TableCell>{trade.quantity}</TableCell>
-                  <TableCell>${(trade.price * trade.quantity).toFixed(2)}</TableCell>
+          <div className="space-y-4">
+            <div className="text-sm text-muted-foreground font-medium">
+              Latest {trades.length} trades
+            </div>
+            <Table>
+              <TableHeader>
+                <TableRow className="border-border/30">
+                  <TableHead className="font-semibold text-foreground">Time</TableHead>
+                  {!movieId && <TableHead className="font-semibold text-foreground">Movie</TableHead>}
+                  <TableHead className="font-semibold text-foreground">Price</TableHead>
+                  <TableHead className="font-semibold text-foreground">Quantity</TableHead>
+                  <TableHead className="font-semibold text-foreground">Total</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {trades.map((trade: any, index) => (
+                  <TableRow 
+                    key={trade.id} 
+                    className="border-border/20 hover:bg-accent/5 transition-colors animate-fade-in"
+                    style={{ animationDelay: `${index * 0.05}s` }}
+                  >
+                    <TableCell className="text-sm font-mono">
+                      {new Date(trade.executed_at).toLocaleTimeString()}
+                    </TableCell>
+                    {!movieId && (
+                      <TableCell>
+                        <div>
+                          <div className="font-semibold text-foreground">{trade.movies?.title}</div>
+                          <div className="text-xs text-muted-foreground font-mono">{trade.movies?.symbol}</div>
+                        </div>
+                      </TableCell>
+                    )}
+                    <TableCell>
+                      <span className="font-semibold premium-text text-lg">${trade.price.toFixed(2)}</span>
+                    </TableCell>
+                    <TableCell>
+                      <span className="font-semibold">{trade.quantity}</span>
+                    </TableCell>
+                    <TableCell>
+                      <span className="font-bold text-lg">${(trade.price * trade.quantity).toFixed(2)}</span>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         )}
       </CardContent>
     </Card>

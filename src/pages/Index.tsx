@@ -11,34 +11,65 @@ const Index = () => {
   
   return (
     <Layout>
-      <Tabs defaultValue="trade" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="trade">Trade</TabsTrigger>
-          <TabsTrigger value="portfolio">Portfolio</TabsTrigger>
-          <TabsTrigger value="history">All Trades</TabsTrigger>
-          {currentUser?.role === 'admin' && (
-            <TabsTrigger value="admin">Admin</TabsTrigger>
-          )}
-        </TabsList>
+      <div className="space-y-8">
+        <div className="text-center space-y-4">
+          <h2 className="text-5xl font-playfair font-bold premium-text">
+            Trade Movie Stocks
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            Experience the future of entertainment investing with our premium movie stock exchange platform
+          </p>
+        </div>
         
-        <TabsContent value="trade">
-          <TradingView />
-        </TabsContent>
-        
-        <TabsContent value="portfolio">
-          <Portfolio />
-        </TabsContent>
-        
-        <TabsContent value="history">
-          <TradeHistory />
-        </TabsContent>
-        
-        {currentUser?.role === 'admin' && (
-          <TabsContent value="admin">
-            <AdminPanel />
+        <Tabs defaultValue="trade" className="w-full">
+          <TabsList className="grid w-full grid-cols-4 h-14 p-1 premium-card">
+            <TabsTrigger 
+              value="trade" 
+              className="h-12 text-base font-semibold rounded-xl transition-all duration-300 data-[state=active]:premium-button data-[state=active]:text-primary-foreground"
+            >
+              Trade
+            </TabsTrigger>
+            <TabsTrigger 
+              value="portfolio" 
+              className="h-12 text-base font-semibold rounded-xl transition-all duration-300 data-[state=active]:premium-button data-[state=active]:text-primary-foreground"
+            >
+              Portfolio
+            </TabsTrigger>
+            <TabsTrigger 
+              value="history" 
+              className="h-12 text-base font-semibold rounded-xl transition-all duration-300 data-[state=active]:premium-button data-[state=active]:text-primary-foreground"
+            >
+              All Trades
+            </TabsTrigger>
+            {currentUser?.role === 'admin' && (
+              <TabsTrigger 
+                value="admin" 
+                className="h-12 text-base font-semibold rounded-xl transition-all duration-300 data-[state=active]:premium-button data-[state=active]:text-primary-foreground"
+              >
+                Admin
+              </TabsTrigger>
+            )}
+          </TabsList>
+          
+          <TabsContent value="trade" className="mt-8">
+            <TradingView />
           </TabsContent>
-        )}
-      </Tabs>
+          
+          <TabsContent value="portfolio" className="mt-8">
+            <Portfolio />
+          </TabsContent>
+          
+          <TabsContent value="history" className="mt-8">
+            <TradeHistory />
+          </TabsContent>
+          
+          {currentUser?.role === 'admin' && (
+            <TabsContent value="admin" className="mt-8">
+              <AdminPanel />
+            </TabsContent>
+          )}
+        </Tabs>
+      </div>
     </Layout>
   );
 };
