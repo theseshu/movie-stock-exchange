@@ -1,9 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Movie } from '@/types';
-import movieMatrix from '@/assets/movie-matrix.jpg';
-import movieDrama from '@/assets/movie-drama.jpg';
-import movieSpace from '@/assets/movie-space.jpg';
+import movieRRR from '@/assets/movie-rrr.jpg';
+import movieKGF from '@/assets/movie-kgf.jpg';
+import movieBaahubali from '@/assets/movie-baahubali.jpg';
 import movieOcean from '@/assets/movie-ocean.jpg';
 import movieThriller from '@/assets/movie-thriller.jpg';
 
@@ -12,7 +12,7 @@ interface MovieCardProps {
   onClick?: () => void;
 }
 
-const moviePosters = [movieMatrix, movieDrama, movieSpace, movieOcean, movieThriller];
+const moviePosters = [movieRRR, movieKGF, movieBaahubali, movieOcean, movieThriller];
 
 const getMoviePoster = (movieId: string) => {
   const hash = movieId.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
