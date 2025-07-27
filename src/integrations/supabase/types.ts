@@ -14,7 +14,231 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      demo_users: {
+        Row: {
+          created_at: string | null
+          display_name: string
+          id: string
+          role: string
+          username: string
+          wallet_balance: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          display_name: string
+          id?: string
+          role?: string
+          username: string
+          wallet_balance?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          display_name?: string
+          id?: string
+          role?: string
+          username?: string
+          wallet_balance?: number | null
+        }
+        Relationships: []
+      }
+      movies: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          id: string
+          market_price: number
+          symbol: string
+          title: string
+          total_supply: number
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          market_price?: number
+          symbol: string
+          title: string
+          total_supply?: number
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          market_price?: number
+          symbol?: string
+          title?: string
+          total_supply?: number
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      orders: {
+        Row: {
+          created_at: string | null
+          filled_quantity: number | null
+          id: string
+          movie_id: string | null
+          order_type: string
+          price: number
+          quantity: number
+          status: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          filled_quantity?: number | null
+          id?: string
+          movie_id?: string | null
+          order_type: string
+          price: number
+          quantity: number
+          status?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          filled_quantity?: number | null
+          id?: string
+          movie_id?: string | null
+          order_type?: string
+          price?: number
+          quantity?: number
+          status?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "orders_movie_id_fkey"
+            columns: ["movie_id"]
+            isOneToOne: false
+            referencedRelation: "movies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "orders_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "demo_users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      portfolios: {
+        Row: {
+          average_price: number | null
+          id: string
+          movie_id: string | null
+          quantity: number | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          average_price?: number | null
+          id?: string
+          movie_id?: string | null
+          quantity?: number | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          average_price?: number | null
+          id?: string
+          movie_id?: string | null
+          quantity?: number | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "portfolios_movie_id_fkey"
+            columns: ["movie_id"]
+            isOneToOne: false
+            referencedRelation: "movies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "portfolios_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "demo_users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      trades: {
+        Row: {
+          buy_order_id: string | null
+          buyer_id: string | null
+          executed_at: string | null
+          id: string
+          movie_id: string | null
+          price: number
+          quantity: number
+          sell_order_id: string | null
+          seller_id: string | null
+        }
+        Insert: {
+          buy_order_id?: string | null
+          buyer_id?: string | null
+          executed_at?: string | null
+          id?: string
+          movie_id?: string | null
+          price: number
+          quantity: number
+          sell_order_id?: string | null
+          seller_id?: string | null
+        }
+        Update: {
+          buy_order_id?: string | null
+          buyer_id?: string | null
+          executed_at?: string | null
+          id?: string
+          movie_id?: string | null
+          price?: number
+          quantity?: number
+          sell_order_id?: string | null
+          seller_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "trades_buy_order_id_fkey"
+            columns: ["buy_order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "trades_buyer_id_fkey"
+            columns: ["buyer_id"]
+            isOneToOne: false
+            referencedRelation: "demo_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "trades_movie_id_fkey"
+            columns: ["movie_id"]
+            isOneToOne: false
+            referencedRelation: "movies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "trades_sell_order_id_fkey"
+            columns: ["sell_order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "trades_seller_id_fkey"
+            columns: ["seller_id"]
+            isOneToOne: false
+            referencedRelation: "demo_users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
