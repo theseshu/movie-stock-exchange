@@ -41,7 +41,7 @@ export function MovieCard({ movie, onClick }: MovieCardProps) {
           <div className="flex items-center justify-between">
             <span className="text-white/80 text-sm font-medium">Current Price</span>
             <span className="text-primary-foreground text-xl font-bold bg-primary px-2 py-1 rounded">
-              ${movie.market_price.toFixed(2)}
+              ₹{(movie.market_price * 83).toFixed(0)}
             </span>
           </div>
         </div>
@@ -51,7 +51,7 @@ export function MovieCard({ movie, onClick }: MovieCardProps) {
         <div className="flex justify-between items-center">
           <span className="text-sm font-medium text-muted-foreground">Market Cap</span>
           <span className="text-sm font-bold text-foreground">
-            ${(movie.market_price * movie.total_supply).toLocaleString()}
+            ₹{((movie.market_price * 83) * movie.total_supply / 10000).toLocaleString()}K
           </span>
         </div>
         

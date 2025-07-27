@@ -42,7 +42,7 @@ export function DashboardStats() {
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       <StatsCard
         title="Portfolio Value"
-        value="$45,231.89"
+        value="₹37,64,267"
         change="+20.1% from last month"
         changeType="positive"
         icon={DollarSign}
@@ -63,7 +63,7 @@ export function DashboardStats() {
       />
       <StatsCard
         title="Total Returns"
-        value="$5,234"
+        value="₹4,34,422"
         change="+4.75% from last month"
         changeType="positive"
         icon={TrendingUp}

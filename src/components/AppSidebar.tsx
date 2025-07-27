@@ -23,30 +23,34 @@ import {
 } from '@/components/ui/sidebar';
 import { useUserStore } from '@/hooks/useUser';
 
+interface SidebarProps {
+  activeTab: string;
+  onTabChange: (tab: string) => void;
+}
+
 const mainItems = [
-  { title: 'Movies', url: '#movies', icon: TrendingUp },
-  { title: 'Portfolio', url: '#portfolio', icon: Briefcase },
-  { title: 'Watchlist', url: '#watchlist', icon: Star },
-  { title: 'Analytics', url: '#analytics', icon: BarChart3 },
-  { title: 'Trade History', url: '#history', icon: History },
+  { title: 'Movies', value: 'trade', icon: TrendingUp },
+  { title: 'Portfolio', value: 'portfolio', icon: Briefcase },
+  { title: 'Watchlist', value: 'watchlist', icon: Star },
+  { title: 'Analytics', value: 'analytics', icon: BarChart3 },
+  { title: 'Trade History', value: 'history', icon: History },
 ];
 
 const adminItems = [
-  { title: 'Admin Panel', url: '#admin', icon: Users },
-  { title: 'Reports', url: '#reports', icon: PieChart },
-  { title: 'Settings', url: '#settings', icon: Settings },
+  { title: 'Admin Panel', value: 'admin', icon: Users },
+  { title: 'Reports', value: 'reports', icon: PieChart },
+  { title: 'Settings', value: 'settings', icon: Settings },
 ];
 
-export function AppSidebar() {
+export function AppSidebar({ activeTab, onTabChange }: SidebarProps) {
   const { state } = useSidebar();
   const { currentUser } = useUserStore();
-  const [activeItem, setActiveItem] = useState('movies');
 
-  const isActive = (url: string) => activeItem === url.replace('#', '');
+  const isActive = (value: string) => activeTab === value;
   const isCollapsed = state === 'collapsed';
 
-  const handleItemClick = (url: string) => {
-    setActiveItem(url.replace('#', ''));
+  const handleItemClick = (value: string) => {
+    onTabChange(value);
   };
 
   return (
@@ -63,17 +67,15 @@ export function AppSidebar() {
               {mainItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton 
-                    asChild
-                    className={`w-full justify-start ${
-                      isActive(item.url) 
+                    className={`w-full justify-start cursor-pointer ${
+                      isActive(item.value) 
                         ? 'bg-primary/10 text-primary border-r-2 border-primary' 
                         : 'hover:bg-accent/50'
                     }`}
+                    onClick={() => handleItemClick(item.value)}
                   >
-                    <button onClick={() => handleItemClick(item.url)}>
-                      <item.icon className="h-4 w-4" />
-                      {!isCollapsed && <span className="ml-2">{item.title}</span>}
-                    </button>
+                    <item.icon className="h-4 w-4" />
+                    {!isCollapsed && <span className="ml-2">{item.title}</span>}
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
@@ -91,17 +93,15 @@ export function AppSidebar() {
                 {adminItems.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton 
-                      asChild
-                      className={`w-full justify-start ${
-                        isActive(item.url) 
+                      className={`w-full justify-start cursor-pointer ${
+                        isActive(item.value) 
                           ? 'bg-primary/10 text-primary border-r-2 border-primary' 
                           : 'hover:bg-accent/50'
                       }`}
+                      onClick={() => handleItemClick(item.value)}
                     >
-                      <button onClick={() => handleItemClick(item.url)}>
-                        <item.icon className="h-4 w-4" />
-                        {!isCollapsed && <span className="ml-2">{item.title}</span>}
-                      </button>
+                      <item.icon className="h-4 w-4" />
+                      {!isCollapsed && <span className="ml-2">{item.title}</span>}
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}
