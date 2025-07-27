@@ -9,9 +9,7 @@ import { DashboardStats } from '@/components/DashboardStats';
 import { useUserStore } from '@/hooks/useUser';
 
 const Index = () => {
-  console.log('Index component rendering...');
   const { currentUser } = useUserStore();
-  console.log('Current user:', currentUser);
   const [activeTab, setActiveTab] = useState('trade');
   
   return (

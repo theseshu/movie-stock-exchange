@@ -1,48 +1,24 @@
-import { Search, Bell, User, TrendingUp } from 'lucide-react';
+import { Search, Bell, User, TrendingUp, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { UserSelector } from '@/components/UserSelector';
+import { SidebarTrigger } from '@/components/ui/sidebar';
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 max-w-screen-2xl items-center">
+    <header className="sticky top-0 z-50 w-full border-b border-border bg-background">
+      <div className="flex h-16 items-center px-6">
+        {/* Sidebar Toggle */}
+        <SidebarTrigger className="mr-4" />
+        
         {/* Logo */}
-        <div className="mr-8 flex items-center space-x-2">
+        <div className="flex items-center space-x-2 mr-8">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
             <TrendingUp className="h-5 w-5 text-primary-foreground" />
           </div>
           <span className="text-xl font-bold text-foreground">MovieTrade</span>
         </div>
-
-        {/* Navigation */}
-        <nav className="flex items-center space-x-6 text-sm font-medium">
-          <a
-            href="#"
-            className="text-primary font-semibold transition-colors hover:text-primary/80"
-          >
-            Movies
-          </a>
-          <a
-            href="#"
-            className="text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Portfolio
-          </a>
-          <a
-            href="#"
-            className="text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Watchlist
-          </a>
-          <a
-            href="#"
-            className="text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Analytics
-          </a>
-        </nav>
 
         <div className="ml-auto flex items-center space-x-4">
           {/* Search */}

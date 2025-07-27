@@ -14,12 +14,12 @@ export function Layout({ children, activeTab = 'trade', onTabChange }: LayoutPro
   
   return (
     <SidebarProvider defaultOpen={true}>
-      <div className="min-h-screen flex w-full bg-gradient-to-br from-background via-background to-accent/5">
+      <div className="min-h-screen flex w-full bg-background">
         <AppSidebar activeTab={activeTab} onTabChange={handleTabChange} />
         <div className="flex-1 flex flex-col">
           <Header />
-          <main className="flex-1 overflow-hidden">
-            <div className="container max-w-screen-2xl p-6">
+          <main className="flex-1 overflow-auto">
+            <div className="container max-w-screen-2xl mx-auto p-6">
               {children}
             </div>
           </main>
