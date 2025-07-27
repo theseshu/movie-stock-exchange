@@ -22,7 +22,7 @@ const Index = () => {
         </div>
         
         <Tabs defaultValue="trade" className="w-full">
-          <TabsList className="grid w-full grid-cols-4 h-14 p-1 premium-card">
+          <TabsList className={`grid w-full h-14 p-1 premium-card ${currentUser?.role === 'admin' ? 'grid-cols-4' : 'grid-cols-2'}`}>
             <TabsTrigger 
               value="trade" 
               className="h-12 text-base font-semibold rounded-xl transition-all duration-300 data-[state=active]:premium-button data-[state=active]:text-primary-foreground"
@@ -35,12 +35,14 @@ const Index = () => {
             >
               Portfolio
             </TabsTrigger>
-            <TabsTrigger 
-              value="history" 
-              className="h-12 text-base font-semibold rounded-xl transition-all duration-300 data-[state=active]:premium-button data-[state=active]:text-primary-foreground"
-            >
-              All Trades
-            </TabsTrigger>
+            {currentUser?.role === 'admin' && (
+              <TabsTrigger 
+                value="history" 
+                className="h-12 text-base font-semibold rounded-xl transition-all duration-300 data-[state=active]:premium-button data-[state=active]:text-primary-foreground"
+              >
+                All Trades
+              </TabsTrigger>
+            )}
             {currentUser?.role === 'admin' && (
               <TabsTrigger 
                 value="admin" 
@@ -59,9 +61,11 @@ const Index = () => {
             <Portfolio />
           </TabsContent>
           
-          <TabsContent value="history" className="mt-8">
-            <TradeHistory />
-          </TabsContent>
+          {currentUser?.role === 'admin' && (
+            <TabsContent value="history" className="mt-8">
+              <TradeHistory />
+            </TabsContent>
+          )}
           
           {currentUser?.role === 'admin' && (
             <TabsContent value="admin" className="mt-8">
