@@ -6,6 +6,7 @@ import { OrderForm } from './OrderForm';
 import { OrderBook } from './OrderBook';
 import { MarketDepth } from './MarketDepth';
 import { TradeHistory } from './TradeHistory';
+import { StockChart } from './StockChart';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 export function TradingView() {
@@ -92,30 +93,39 @@ export function TradingView() {
           </DialogHeader>
           
           {selectedMovie && (
-            <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 pt-6">
-              <div className="space-y-8">
-                <OrderForm 
-                  movie={selectedMovie}
-                  onOrderPlaced={handleOrderPlaced}
-                  selectedPrice={selectedPrice}
-                  selectedOrderType={selectedOrderType}
-                  onPriceUsed={() => {
-                    setSelectedPrice(null);
-                    setSelectedOrderType(null);
-                  }}
-                />
-              </div>
+            <div className="space-y-8 pt-6">
+              {/* Stock Chart - Full Width */}
+              <StockChart 
+                movieId={selectedMovie.id} 
+                currentPrice={selectedMovie.market_price}
+              />
               
-              <div className="space-y-6">
-                <MarketDepth 
-                  movieId={selectedMovie.id} 
-                  onPriceClick={handlePriceClick}
-                />
-                <OrderBook movieId={selectedMovie.id} />
-              </div>
-              
-              <div>
-                <TradeHistory movieId={selectedMovie.id} />
+              {/* Trading Components Grid */}
+              <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
+                <div className="space-y-8">
+                  <OrderForm 
+                    movie={selectedMovie}
+                    onOrderPlaced={handleOrderPlaced}
+                    selectedPrice={selectedPrice}
+                    selectedOrderType={selectedOrderType}
+                    onPriceUsed={() => {
+                      setSelectedPrice(null);
+                      setSelectedOrderType(null);
+                    }}
+                  />
+                </div>
+                
+                <div className="space-y-6">
+                  <MarketDepth 
+                    movieId={selectedMovie.id} 
+                    onPriceClick={handlePriceClick}
+                  />
+                  <OrderBook movieId={selectedMovie.id} />
+                </div>
+                
+                <div>
+                  <TradeHistory movieId={selectedMovie.id} />
+                </div>
               </div>
             </div>
           )}
