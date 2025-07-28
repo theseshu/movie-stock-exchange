@@ -4,6 +4,7 @@ import { Movie } from '@/types';
 import { MovieCard } from './MovieCard';
 import { OrderForm } from './OrderForm';
 import { OrderBook } from './OrderBook';
+import { MarketDepth } from './MarketDepth';
 import { TradeHistory } from './TradeHistory';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
@@ -11,6 +12,8 @@ export function TradingView() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedPrice, setSelectedPrice] = useState<number | null>(null);
+  const [selectedOrderType, setSelectedOrderType] = useState<'buy' | 'sell' | null>(null);
 
   useEffect(() => {
     fetchMovies();
@@ -53,6 +56,11 @@ export function TradingView() {
     fetchMovies();
   };
 
+  const handlePriceClick = (price: number, type: 'buy' | 'sell') => {
+    setSelectedPrice(price);
+    setSelectedOrderType(type);
+  };
+
   return (
     <div className="space-y-8">
       {/* Movies Grid */}
@@ -84,11 +92,24 @@ export function TradingView() {
           </DialogHeader>
           
           {selectedMovie && (
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 pt-6">
+            <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 pt-6">
               <div className="space-y-8">
                 <OrderForm 
                   movie={selectedMovie}
                   onOrderPlaced={handleOrderPlaced}
+                  selectedPrice={selectedPrice}
+                  selectedOrderType={selectedOrderType}
+                  onPriceUsed={() => {
+                    setSelectedPrice(null);
+                    setSelectedOrderType(null);
+                  }}
+                />
+              </div>
+              
+              <div className="space-y-6">
+                <MarketDepth 
+                  movieId={selectedMovie.id} 
+                  onPriceClick={handlePriceClick}
                 />
                 <OrderBook movieId={selectedMovie.id} />
               </div>

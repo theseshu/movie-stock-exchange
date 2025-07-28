@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -12,15 +12,27 @@ import { useToast } from '@/hooks/use-toast';
 interface OrderFormProps {
   movie: Movie;
   onOrderPlaced?: () => void;
+  selectedPrice?: number | null;
+  selectedOrderType?: 'buy' | 'sell' | null;
+  onPriceUsed?: () => void;
 }
 
-export function OrderForm({ movie, onOrderPlaced }: OrderFormProps) {
+export function OrderForm({ movie, onOrderPlaced, selectedPrice, selectedOrderType, onPriceUsed }: OrderFormProps) {
   const [orderType, setOrderType] = useState<'buy' | 'sell'>('buy');
   const [price, setPrice] = useState(movie.market_price.toString());
   const [quantity, setQuantity] = useState('');
   const [loading, setLoading] = useState(false);
   const { currentUser } = useUserStore();
   const { toast } = useToast();
+
+  // Handle price selection from market depth
+  useEffect(() => {
+    if (selectedPrice && selectedOrderType) {
+      setPrice(selectedPrice.toString());
+      setOrderType(selectedOrderType);
+      onPriceUsed?.();
+    }
+  }, [selectedPrice, selectedOrderType, onPriceUsed]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
