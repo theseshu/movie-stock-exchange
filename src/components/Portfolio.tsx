@@ -96,7 +96,7 @@ export function Portfolio({ userId }: PortfolioProps) {
         <div className="flex justify-between items-center">
           <CardTitle>Portfolio</CardTitle>
           <Badge variant="outline" className="text-lg px-3 py-1">
-            Total: ${totalValue.toFixed(2)}
+            Total: ₹{totalValue.toFixed(2)}
           </Badge>
         </div>
       </CardHeader>
@@ -131,12 +131,12 @@ export function Portfolio({ userId }: PortfolioProps) {
                       </div>
                     </TableCell>
                     <TableCell>{portfolio.quantity}</TableCell>
-                    <TableCell>${portfolio.average_price.toFixed(2)}</TableCell>
-                    <TableCell>${portfolio.movies.market_price.toFixed(2)}</TableCell>
-                    <TableCell>${currentValue.toFixed(2)}</TableCell>
+                    <TableCell>₹{portfolio.average_price.toFixed(2)}</TableCell>
+                    <TableCell>₹{portfolio.movies.market_price.toFixed(2)}</TableCell>
+                    <TableCell>₹{currentValue.toFixed(2)}</TableCell>
                     <TableCell>
                       <div className={`${pnl >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                        ${pnl.toFixed(2)}
+                        ₹{pnl.toFixed(2)}
                         <div className="text-xs">
                           ({pnlPercent >= 0 ? '+' : ''}{pnlPercent.toFixed(1)}%)
                         </div>

@@ -64,11 +64,11 @@ export function OrderBook({ movieId }: OrderBookProps) {
                 buyOrders.map((order) => (
                   <div key={order.id} className="flex justify-between items-center p-2 bg-green-50 rounded">
                     <div>
-                      <div className="text-sm font-medium">${order.price.toFixed(2)}</div>
+                      <div className="text-sm font-medium">₹{order.price.toFixed(2)}</div>
                       <div className="text-xs text-muted-foreground">{order.quantity} units</div>
                     </div>
                     <Badge variant="secondary" className="text-xs">
-                      ${(order.price * order.quantity).toFixed(2)}
+                      ₹{(order.price * order.quantity).toFixed(2)}
                     </Badge>
                   </div>
                 ))
@@ -86,11 +86,11 @@ export function OrderBook({ movieId }: OrderBookProps) {
                 sellOrders.map((order) => (
                   <div key={order.id} className="flex justify-between items-center p-2 bg-red-50 rounded">
                     <div>
-                      <div className="text-sm font-medium">${order.price.toFixed(2)}</div>
+                      <div className="text-sm font-medium">₹{order.price.toFixed(2)}</div>
                       <div className="text-xs text-muted-foreground">{order.quantity} units</div>
                     </div>
                     <Badge variant="secondary" className="text-xs">
-                      ${(order.price * order.quantity).toFixed(2)}
+                      ₹{(order.price * order.quantity).toFixed(2)}
                     </Badge>
                   </div>
                 ))

@@ -88,7 +88,7 @@ export function TradingView() {
               Trade {selectedMovie?.title} ({selectedMovie?.symbol})
             </DialogTitle>
             <p className="text-muted-foreground text-lg">
-              Current Price: <span className="premium-text font-semibold text-xl">${selectedMovie?.market_price.toFixed(2)}</span>
+              Current Price: <span className="premium-text font-semibold text-xl">₹{selectedMovie?.market_price.toFixed(2)}</span>
             </p>
           </DialogHeader>
           

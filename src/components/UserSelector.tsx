@@ -67,7 +67,7 @@ export function UserSelector() {
           <div className="flex items-center gap-2">
             <span className="text-sm text-muted-foreground">Balance:</span>
             <span className="premium-text text-lg font-bold font-mono">
-              ${currentUser.wallet_balance.toFixed(2)}
+              ₹{currentUser.wallet_balance.toFixed(2)}
             </span>
           </div>
         </div>

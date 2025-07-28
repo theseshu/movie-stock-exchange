@@ -143,7 +143,7 @@ export function StockChart({ movieId, currentPrice }: StockChartProps) {
 
   const formatTooltipValue = (value: any, name: string) => {
     if (name === 'price') {
-      return [`$${Number(value).toFixed(2)}`, 'Price'];
+      return [`₹${Number(value).toFixed(2)}`, 'Price'];
     }
     return [value, name];
   };
@@ -165,7 +165,7 @@ export function StockChart({ movieId, currentPrice }: StockChartProps) {
         {priceData.length >= 2 && (
           <div className="flex items-center gap-2 text-sm">
             <span className={`font-medium ${priceChange >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-              {priceChange >= 0 ? '+' : ''}${priceChange.toFixed(2)} ({priceChangePercent >= 0 ? '+' : ''}{priceChangePercent.toFixed(2)}%)
+              {priceChange >= 0 ? '+' : ''}₹{priceChange.toFixed(2)} ({priceChangePercent >= 0 ? '+' : ''}{priceChangePercent.toFixed(2)}%)
             </span>
             <span className="text-muted-foreground">for {selectedPeriod}</span>
           </div>
@@ -208,7 +208,7 @@ export function StockChart({ movieId, currentPrice }: StockChartProps) {
                 tick={{ fontSize: 12 }}
                 className="text-muted-foreground"
                 domain={['dataMin - 5', 'dataMax + 5']}
-                tickFormatter={(value) => `$${value}`}
+                tickFormatter={(value) => `₹${value}`}
               />
               <ChartTooltip 
                 content={<ChartTooltipContent formatter={formatTooltipValue} />}

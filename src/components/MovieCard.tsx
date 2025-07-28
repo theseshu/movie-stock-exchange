@@ -42,7 +42,7 @@ export function MovieCard({ movie, onClick }: MovieCardProps) {
             {movie.title}
           </CardTitle>
           <div className="text-white/80 text-sm">
-            <span className="premium-text font-semibold text-lg">${movie.market_price.toFixed(2)}</span>
+            <span className="premium-text font-semibold text-lg">₹{movie.market_price.toFixed(2)}</span>
           </div>
         </div>
       </div>
@@ -50,7 +50,7 @@ export function MovieCard({ movie, onClick }: MovieCardProps) {
       <CardContent className="p-6 space-y-4 bg-gradient-to-br from-card via-card to-accent/5">
         <div className="flex justify-between items-center">
           <span className="text-sm font-medium text-muted-foreground">Market Price</span>
-          <span className="text-2xl font-bold premium-text font-playfair">${movie.market_price.toFixed(2)}</span>
+          <span className="text-2xl font-bold premium-text font-playfair">₹{movie.market_price.toFixed(2)}</span>
         </div>
         
         <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />

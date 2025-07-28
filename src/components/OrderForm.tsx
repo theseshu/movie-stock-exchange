@@ -111,7 +111,7 @@ export function OrderForm({ movie, onOrderPlaced, selectedPrice, selectedOrderTy
           <TabsContent value={orderType} className="space-y-4">
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <Label htmlFor="price">Price per unit ($)</Label>
+                <Label htmlFor="price">Price per unit (₹)</Label>
                 <Input
                   id="price"
                   type="number"
@@ -137,7 +137,7 @@ export function OrderForm({ movie, onOrderPlaced, selectedPrice, selectedOrderTy
                 <div className="p-3 bg-muted rounded-lg">
                   <div className="flex justify-between">
                     <span>Total Value:</span>
-                    <span className="font-semibold">${totalValue.toFixed(2)}</span>
+                    <span className="font-semibold">₹{totalValue.toFixed(2)}</span>
                   </div>
                 </div>
               )}

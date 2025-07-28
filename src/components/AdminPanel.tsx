@@ -164,7 +164,7 @@ export function AdminPanel() {
                   </div>
                   
                   <div>
-                    <Label htmlFor="market_price">Initial Market Price ($)</Label>
+                    <Label htmlFor="market_price">Initial Market Price (₹)</Label>
                     <Input
                       id="market_price"
                       type="number"
@@ -208,7 +208,7 @@ export function AdminPanel() {
                           <p className="text-sm text-muted-foreground">{movie.symbol}</p>
                         </div>
                         <div className="text-right">
-                          <div className="font-semibold">${movie.market_price.toFixed(2)}</div>
+                          <div className="font-semibold">₹{movie.market_price.toFixed(2)}</div>
                           <div className="text-xs text-muted-foreground">
                             Supply: {movie.total_supply.toLocaleString()}
                           </div>

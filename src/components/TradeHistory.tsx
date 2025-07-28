@@ -105,13 +105,13 @@ export function TradeHistory({ movieId }: TradeHistoryProps) {
                       </TableCell>
                     )}
                     <TableCell>
-                      <span className="font-semibold premium-text text-lg">${trade.price.toFixed(2)}</span>
+                      <span className="font-semibold premium-text text-lg">₹{trade.price.toFixed(2)}</span>
                     </TableCell>
                     <TableCell>
                       <span className="font-semibold">{trade.quantity}</span>
                     </TableCell>
                     <TableCell>
-                      <span className="font-bold text-lg">${(trade.price * trade.quantity).toFixed(2)}</span>
+                      <span className="font-bold text-lg">₹{(trade.price * trade.quantity).toFixed(2)}</span>
                     </TableCell>
                   </TableRow>
                 ))}
