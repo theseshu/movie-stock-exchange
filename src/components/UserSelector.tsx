@@ -25,8 +25,8 @@ export function UserSelector() {
     
     setUsers(data || []);
     
-    // Set first user as default if no user selected
-    if (!currentUser && data && data.length > 0) {
+    // Always set first user as default to ensure demo mode works
+    if (data && data.length > 0) {
       setCurrentUser(data[0]);
     }
   };
