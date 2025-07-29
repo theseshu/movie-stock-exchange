@@ -1,11 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Movie } from '@/types';
-import movieMatrix from '@/assets/movie-matrix.jpg';
+import movieMatrix from '@/assets/peddi.jpg';
 import movieDrama from '@/assets/bahubali.jpg';
 import movieSpace from '@/assets/rrr.jpg';
 import movieOcean from '@/assets/peddi.jpg';
-import movieThriller from '@/assets/movie-thriller.jpg';
+import movieThriller from '@/assets/peddi.jpg';
 
 interface MovieCardProps {
   movie: Movie;
