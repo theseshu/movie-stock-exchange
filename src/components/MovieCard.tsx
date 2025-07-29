@@ -15,7 +15,12 @@ interface MovieCardProps {
 const moviePosters = [movieMatrix, movieDrama, movieSpace, movieOcean, movieThriller];
 
 const getMoviePoster = (movie: Movie) => {
-  // Map specific movies to their correct posters
+  // If movie has uploaded image, use it
+  if (movie.image_url) {
+    return movie.image_url;
+  }
+  
+  // Fallback to hardcoded images for specific movies
   if (movie.title.toUpperCase().includes('BAHUBALI') || movie.title.toUpperCase().includes('BAAHUBALI')) {
     return movieDrama; // bahubali.jpg
   }

@@ -10,6 +10,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { Movie } from '@/types';
 import { TradeHistory } from './TradeHistory';
+import { ImageUpload } from './ImageUpload';
 
 export function AdminPanel() {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -18,7 +19,8 @@ export function AdminPanel() {
     title: '',
     total_supply: '',
     market_price: '',
-    description: ''
+    description: '',
+    image_url: ''
   });
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
@@ -53,7 +55,8 @@ export function AdminPanel() {
           title: newMovie.title,
           total_supply: parseInt(newMovie.total_supply),
           market_price: parseFloat(newMovie.market_price),
-          description: newMovie.description || null
+          description: newMovie.description || null,
+          image_url: newMovie.image_url || null
         });
 
       if (error) throw error;
@@ -68,7 +71,8 @@ export function AdminPanel() {
         title: '',
         total_supply: '',
         market_price: '',
-        description: ''
+        description: '',
+        image_url: ''
       });
 
       fetchMovies();
@@ -112,6 +116,34 @@ export function AdminPanel() {
     }
   };
 
+  const updateMovieImage = async (movieId: string, imageUrl: string) => {
+    try {
+      const { error } = await supabase
+        .from('movies')
+        .update({ 
+          image_url: imageUrl,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', movieId);
+
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: "Movie image updated"
+      });
+
+      fetchMovies();
+    } catch (error) {
+      console.error('Error updating image:', error);
+      toast({
+        title: "Error",
+        description: "Failed to update image",
+        variant: "destructive"
+      });
+    }
+  };
+
   return (
     <div className="space-y-6">
       <Tabs defaultValue="movies" className="w-full">
@@ -150,6 +182,13 @@ export function AdminPanel() {
                       required
                     />
                   </div>
+
+                  <ImageUpload
+                    currentImageUrl={newMovie.image_url}
+                    onImageUploaded={(url) => setNewMovie({...newMovie, image_url: url})}
+                    onImageRemoved={() => setNewMovie({...newMovie, image_url: ''})}
+                    disabled={loading}
+                  />
                   
                   <div>
                     <Label htmlFor="total_supply">Total Supply</Label>
@@ -201,50 +240,80 @@ export function AdminPanel() {
               <CardContent>
                 <div className="space-y-4">
                   {movies.map((movie) => (
-                    <div key={movie.id} className="border rounded-lg p-4">
-                      <div className="flex justify-between items-start mb-2">
-                        <div>
-                          <h4 className="font-semibold">{movie.title}</h4>
-                          <p className="text-sm text-muted-foreground">{movie.symbol}</p>
+                    <div key={movie.id} className="border rounded-lg p-4 space-y-4">
+                      <div className="flex gap-4">
+                        {/* Movie Image */}
+                        <div className="w-24 h-32 flex-shrink-0">
+                          {movie.image_url ? (
+                            <img 
+                              src={movie.image_url} 
+                              alt={movie.title}
+                              className="w-full h-full object-cover rounded border"
+                            />
+                          ) : (
+                            <div className="w-full h-full bg-muted rounded border flex items-center justify-center text-xs text-muted-foreground">
+                              No Image
+                            </div>
+                          )}
                         </div>
-                        <div className="text-right">
-                          <div className="font-semibold">₹{movie.market_price.toFixed(2)}</div>
-                          <div className="text-xs text-muted-foreground">
-                            Supply: {movie.total_supply.toLocaleString()}
+
+                        {/* Movie Details */}
+                        <div className="flex-1">
+                          <div className="flex justify-between items-start mb-2">
+                            <div>
+                              <h4 className="font-semibold">{movie.title}</h4>
+                              <p className="text-sm text-muted-foreground">{movie.symbol}</p>
+                            </div>
+                            <div className="text-right">
+                              <div className="font-semibold">₹{movie.market_price.toFixed(2)}</div>
+                              <div className="text-xs text-muted-foreground">
+                                Supply: {movie.total_supply.toLocaleString()}
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Image Upload */}
+                          <div className="mb-3">
+                            <ImageUpload
+                              currentImageUrl={movie.image_url || undefined}
+                              onImageUploaded={(url) => updateMovieImage(movie.id, url)}
+                              onImageRemoved={() => updateMovieImage(movie.id, '')}
+                            />
+                          </div>
+                          
+                          {/* Price Update */}
+                          <div className="flex gap-2">
+                            <Input
+                              type="number"
+                              step="0.01"
+                              placeholder="New price"
+                              className="flex-1"
+                              onKeyPress={(e) => {
+                                if (e.key === 'Enter') {
+                                  const target = e.target as HTMLInputElement;
+                                  const newPrice = parseFloat(target.value);
+                                  if (newPrice > 0) {
+                                    updateMarketPrice(movie.id, newPrice);
+                                    target.value = '';
+                                  }
+                                }
+                              }}
+                            />
+                            <Button 
+                              size="sm"
+                              onClick={(e) => {
+                                const input = e.currentTarget.previousElementSibling as HTMLInputElement;
+                                const newPrice = parseFloat(input.value);
+                                if (newPrice > 0) {
+                                  updateMarketPrice(movie.id, newPrice);
+                                  input.value = '';
+                                }
+                              }}
+                            >
+                              Update Price
+                            </Button>
                           </div>
                         </div>
-                      </div>
-                      
-                      <div className="flex gap-2 mt-3">
-                        <Input
-                          type="number"
-                          step="0.01"
-                          placeholder="New price"
-                          className="flex-1"
-                          onKeyPress={(e) => {
-                            if (e.key === 'Enter') {
-                              const target = e.target as HTMLInputElement;
-                              const newPrice = parseFloat(target.value);
-                              if (newPrice > 0) {
-                                updateMarketPrice(movie.id, newPrice);
-                                target.value = '';
-                              }
-                            }
-                          }}
-                        />
-                        <Button 
-                          size="sm"
-                          onClick={(e) => {
-                            const input = e.currentTarget.previousElementSibling as HTMLInputElement;
-                            const newPrice = parseFloat(input.value);
-                            if (newPrice > 0) {
-                              updateMarketPrice(movie.id, newPrice);
-                              input.value = '';
-                            }
-                          }}
-                        >
-                          Update Price
-                        </Button>
                       </div>
                     </div>
                   ))}
