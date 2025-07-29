@@ -22,9 +22,9 @@ export const useAuth = () => {
 };
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // Demo mode - simulate authenticated user
+  // Demo mode - use real authenticated user for demo purposes
   const [user] = useState<User | null>({
-    id: 'demo-user-id',
+    id: '13aa6ea2-c046-45f2-b7da-983356a03702', // Use actual authenticated user ID
     email: 'demo@example.com',
     user_metadata: { username: 'demo-user' },
     app_metadata: {},
@@ -33,7 +33,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   } as unknown as User);
   const [session] = useState<Session | null>({
     user: {
-      id: 'demo-user-id',
+      id: '13aa6ea2-c046-45f2-b7da-983356a03702', // Use actual authenticated user ID
       email: 'demo@example.com',
       user_metadata: { username: 'demo-user' },
       app_metadata: {},

@@ -23,9 +23,34 @@ const Index = () => {
   };
 
   useEffect(() => {
-    // Demo mode - start with admin profile
-    setUserProfile({ role: 'admin' });
-  }, []);
+    if (user) {
+      fetchUserProfile();
+    }
+  }, [user]);
+
+  const fetchUserProfile = async () => {
+    if (!user) return;
+    
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', user.id)
+      .single();
+      
+    if (error) {
+      console.error('Error fetching user profile:', error);
+      // Fallback to demo profile with admin role
+      setUserProfile({ 
+        id: user.id,
+        role: 'admin', 
+        wallet_balance: 10000,
+        username: 'demo-user',
+        display_name: 'Demo User'
+      });
+    } else {
+      setUserProfile(data);
+    }
+  };
 
   // Demo mode - no auth checks needed
   
@@ -43,6 +68,11 @@ const Index = () => {
           </div>
           <div className="flex flex-col items-end space-y-2">
             <div className="text-sm text-muted-foreground">Demo Mode</div>
+            {userProfile?.wallet_balance !== undefined && (
+              <div className="text-lg font-semibold text-green-600">
+                Wallet: ₹{userProfile.wallet_balance.toLocaleString()}
+              </div>
+            )}
             <Button 
               onClick={toggleRole}
               variant="outline"
