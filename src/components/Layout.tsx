@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { UserSelector } from './UserSelector';
+import { ThemeSwitcher } from './ThemeSwitcher';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 interface LayoutProps {
@@ -23,7 +24,10 @@ export function Layout({ children }: LayoutProps) {
                 <p className="text-muted-foreground text-sm">Premium Stock Exchange</p>
               </div>
             </div>
-            <UserSelector />
+            <div className="flex items-center space-x-4">
+              <ThemeSwitcher />
+              <UserSelector />
+            </div>
           </div>
         </div>
       </header>
