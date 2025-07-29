@@ -33,7 +33,7 @@ export function MovieCard({ movie, onClick }: MovieCardProps) {
   
   return (
     <Card className="group premium-card floating-card cursor-pointer border-border/30 overflow-hidden animate-fade-in" onClick={onClick}>
-      <div className="relative aspect-[3/4] overflow-hidden">
+      <div className="relative aspect-[2/3] overflow-hidden">
         <img 
           src={poster} 
           alt={`${movie.title} poster`}
