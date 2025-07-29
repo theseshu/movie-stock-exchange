@@ -14,13 +14,22 @@ interface MovieCardProps {
 
 const moviePosters = [movieMatrix, movieDrama, movieSpace, movieOcean, movieThriller];
 
-const getMoviePoster = (movieId: string) => {
-  const hash = movieId.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+const getMoviePoster = (movie: Movie) => {
+  // Map specific movies to their correct posters
+  if (movie.title.toUpperCase().includes('BAHUBALI') || movie.title.toUpperCase().includes('BAAHUBALI')) {
+    return movieDrama; // bahubali.jpg
+  }
+  if (movie.title.toUpperCase().includes('RRR')) {
+    return movieSpace; // rrr.jpg
+  }
+  
+  // Fall back to hash-based selection for other movies
+  const hash = movie.id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
   return moviePosters[hash % moviePosters.length];
 };
 
 export function MovieCard({ movie, onClick }: MovieCardProps) {
-  const poster = getMoviePoster(movie.id);
+  const poster = getMoviePoster(movie);
   
   return (
     <Card className="group premium-card floating-card cursor-pointer border-border/30 overflow-hidden animate-fade-in" onClick={onClick}>
