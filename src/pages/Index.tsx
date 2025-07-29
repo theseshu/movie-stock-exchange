@@ -15,46 +15,11 @@ const Index = () => {
   const [userProfile, setUserProfile] = useState<any>(null);
 
   useEffect(() => {
-    if (!loading && !user) {
-      navigate('/auth');
-    }
-  }, [user, loading, navigate]);
+    // Demo mode - simulate admin profile
+    setUserProfile({ role: 'admin' });
+  }, []);
 
-  useEffect(() => {
-    if (user) {
-      fetchUserProfile();
-    }
-  }, [user]);
-
-  const fetchUserProfile = async () => {
-    if (!user) return;
-    
-    const { data, error } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', user.id)
-      .single();
-      
-    if (error) {
-      console.error('Error fetching user profile:', error);
-    } else {
-      setUserProfile(data);
-    }
-  };
-
-  if (loading) {
-    return (
-      <Layout>
-        <div className="flex items-center justify-center min-h-[400px]">
-          <div className="text-lg">Loading...</div>
-        </div>
-      </Layout>
-    );
-  }
-
-  if (!user) {
-    return null; // Will redirect to auth
-  }
+  // Demo mode - no auth checks needed
   
   return (
     <Layout>
