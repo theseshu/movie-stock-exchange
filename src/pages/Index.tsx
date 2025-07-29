@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Button } from '@/components/ui/button';
 import { Layout } from '@/components/Layout';
 import { TradingView } from '@/components/TradingView';
 import { Portfolio } from '@/components/Portfolio';
@@ -12,10 +13,17 @@ import { supabase } from '@/integrations/supabase/client';
 const Index = () => {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
-  const [userProfile, setUserProfile] = useState<any>(null);
+  const [userProfile, setUserProfile] = useState<any>({ role: 'admin' });
+
+  const toggleRole = () => {
+    setUserProfile((prev: any) => ({ 
+      ...prev, 
+      role: prev.role === 'admin' ? 'user' : 'admin' 
+    }));
+  };
 
   useEffect(() => {
-    // Demo mode - simulate admin profile
+    // Demo mode - start with admin profile
     setUserProfile({ role: 'admin' });
   }, []);
 
@@ -24,13 +32,28 @@ const Index = () => {
   return (
     <Layout>
       <div className="space-y-8">
-        <div className="text-center space-y-4">
-          <h2 className="text-3xl font-playfair font-bold premium-text">
-            Trade Movie Stocks
-          </h2>
-          <p className="text-base text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Experience the future of entertainment investing with our premium movie stock exchange platform
-          </p>
+        <div className="flex justify-between items-start">
+          <div className="text-center space-y-4 flex-1">
+            <h2 className="text-3xl font-playfair font-bold premium-text">
+              Trade Movie Stocks
+            </h2>
+            <p className="text-base text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              Experience the future of entertainment investing with our premium movie stock exchange platform
+            </p>
+          </div>
+          <div className="flex flex-col items-end space-y-2">
+            <div className="text-sm text-muted-foreground">Demo Mode</div>
+            <Button 
+              onClick={toggleRole}
+              variant="outline"
+              size="sm"
+            >
+              Switch to {userProfile?.role === 'admin' ? 'User' : 'Admin'} View
+            </Button>
+            <div className="text-xs font-medium text-primary">
+              Current: {userProfile?.role === 'admin' ? 'Admin' : 'User'}
+            </div>
+          </div>
         </div>
         
         <Tabs defaultValue="trade" className="w-full">
