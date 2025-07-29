@@ -1,93 +1,28 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Button } from '@/components/ui/button';
 import { Layout } from '@/components/Layout';
 import { TradingView } from '@/components/TradingView';
 import { Portfolio } from '@/components/Portfolio';
 import { AdminPanel } from '@/components/AdminPanel';
 import { TradeHistory } from '@/components/TradeHistory';
-import { useAuth } from '@/components/AuthProvider';
-import { supabase } from '@/integrations/supabase/client';
+import { useUserStore } from '@/hooks/useUser';
 
 const Index = () => {
-  const { user, loading } = useAuth();
-  const navigate = useNavigate();
-  const [userProfile, setUserProfile] = useState<any>({ role: 'admin' });
-
-  const toggleRole = () => {
-    setUserProfile((prev: any) => ({ 
-      ...prev, 
-      role: prev.role === 'admin' ? 'user' : 'admin' 
-    }));
-  };
-
-  useEffect(() => {
-    if (user) {
-      fetchUserProfile();
-    }
-  }, [user]);
-
-  const fetchUserProfile = async () => {
-    if (!user) return;
-    
-    const { data, error } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', user.id)
-      .single();
-      
-    if (error) {
-      console.error('Error fetching user profile:', error);
-      // Fallback to demo profile with admin role
-      setUserProfile({ 
-        id: user.id,
-        role: 'admin', 
-        wallet_balance: 10000,
-        username: 'demo-user',
-        display_name: 'Demo User'
-      });
-    } else {
-      setUserProfile(data);
-    }
-  };
-
-  // Demo mode - no auth checks needed
+  const { currentUser } = useUserStore();
   
   return (
     <Layout>
       <div className="space-y-8">
-        <div className="flex justify-between items-start">
-          <div className="text-center space-y-4 flex-1">
-            <h2 className="text-3xl font-playfair font-bold premium-text">
-              Trade Movie Stocks
-            </h2>
-            <p className="text-base text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Experience the future of entertainment investing with our premium movie stock exchange platform
-            </p>
-          </div>
-          <div className="flex flex-col items-end space-y-2">
-            <div className="text-sm text-muted-foreground">Demo Mode</div>
-            {userProfile?.wallet_balance !== undefined && (
-              <div className="text-lg font-semibold text-green-600">
-                Wallet: ₹{userProfile.wallet_balance.toLocaleString()}
-              </div>
-            )}
-            <Button 
-              onClick={toggleRole}
-              variant="outline"
-              size="sm"
-            >
-              Switch to {userProfile?.role === 'admin' ? 'User' : 'Admin'} View
-            </Button>
-            <div className="text-xs font-medium text-primary">
-              Current: {userProfile?.role === 'admin' ? 'Admin' : 'User'}
-            </div>
-          </div>
+        <div className="text-center space-y-4">
+          <h2 className="text-3xl font-playfair font-bold premium-text">
+            Trade Movie Stocks
+          </h2>
+          <p className="text-base text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            Experience the future of entertainment investing with our premium movie stock exchange platform
+          </p>
         </div>
         
         <Tabs defaultValue="trade" className="w-full">
-          <TabsList className={`grid w-full h-14 p-1 premium-card ${userProfile?.role === 'admin' ? 'grid-cols-4' : 'grid-cols-2'}`}>
+          <TabsList className={`grid w-full h-14 p-1 premium-card ${currentUser?.role === 'admin' ? 'grid-cols-4' : 'grid-cols-2'}`}>
             <TabsTrigger 
               value="trade" 
               className="h-12 text-sm font-semibold rounded-xl transition-all duration-300 data-[state=active]:premium-button data-[state=active]:text-primary-foreground"
@@ -100,7 +35,7 @@ const Index = () => {
             >
               Portfolio
             </TabsTrigger>
-            {userProfile?.role === 'admin' && (
+            {currentUser?.role === 'admin' && (
               <TabsTrigger 
                 value="history" 
                 className="h-12 text-sm font-semibold rounded-xl transition-all duration-300 data-[state=active]:premium-button data-[state=active]:text-primary-foreground"
@@ -108,7 +43,7 @@ const Index = () => {
                 All Trades
               </TabsTrigger>
             )}
-            {userProfile?.role === 'admin' && (
+            {currentUser?.role === 'admin' && (
               <TabsTrigger 
                 value="admin" 
                 className="h-12 text-sm font-semibold rounded-xl transition-all duration-300 data-[state=active]:premium-button data-[state=active]:text-primary-foreground"
@@ -126,13 +61,13 @@ const Index = () => {
             <Portfolio />
           </TabsContent>
           
-          {userProfile?.role === 'admin' && (
+          {currentUser?.role === 'admin' && (
             <TabsContent value="history" className="mt-8">
               <TradeHistory />
             </TabsContent>
           )}
           
-          {userProfile?.role === 'admin' && (
+          {currentUser?.role === 'admin' && (
             <TabsContent value="admin" className="mt-8">
               <AdminPanel />
             </TabsContent>
