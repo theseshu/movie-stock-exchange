@@ -170,6 +170,36 @@ export type Database = {
           },
         ]
       }
+      profiles: {
+        Row: {
+          created_at: string
+          display_name: string | null
+          id: string
+          role: string
+          updated_at: string
+          username: string
+          wallet_balance: number
+        }
+        Insert: {
+          created_at?: string
+          display_name?: string | null
+          id: string
+          role?: string
+          updated_at?: string
+          username: string
+          wallet_balance?: number
+        }
+        Update: {
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          role?: string
+          updated_at?: string
+          username?: string
+          wallet_balance?: number
+        }
+        Relationships: []
+      }
       trades: {
         Row: {
           buy_order_id: string | null
@@ -247,7 +277,18 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_current_user_profile: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          created_at: string
+          display_name: string | null
+          id: string
+          role: string
+          updated_at: string
+          username: string
+          wallet_balance: number
+        }
+      }
     }
     Enums: {
       [_ in never]: never
