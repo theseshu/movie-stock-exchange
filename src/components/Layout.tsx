@@ -18,7 +18,7 @@ export function Layout({ children }: LayoutProps) {
                 <span className="text-2xl">🎬</span>
               </div>
               <div>
-                <h1 className="text-3xl font-playfair font-bold premium-text">
+                <h1 className="text-3xl font-display font-bold premium-text tracking-tight">
                   MovieStockExchange
                 </h1>
                 <p className="text-muted-foreground text-sm">MSE - Premium Stock Exchange</p>

@@ -19,8 +19,9 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				'inter': ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-				'playfair': ['Playfair Display', 'serif'],
+				'sans': ['Poppins', 'system-ui', '-apple-system', 'sans-serif'],
+				'display': ['Orbitron', 'system-ui', 'sans-serif'],
+				'body': ['Space Grotesk', 'system-ui', 'sans-serif'],
 				'mono': ['JetBrains Mono', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
 			},
 			colors: {
