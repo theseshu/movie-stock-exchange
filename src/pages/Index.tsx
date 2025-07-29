@@ -13,10 +13,10 @@ const Index = () => {
     <Layout>
       <div className="space-y-8">
         <div className="text-center space-y-4">
-          <h2 className="text-5xl font-playfair font-bold premium-text">
+          <h2 className="text-3xl font-playfair font-bold premium-text">
             Trade Movie Stocks
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          <p className="text-base text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             Experience the future of entertainment investing with our premium movie stock exchange platform
           </p>
         </div>
@@ -25,20 +25,20 @@ const Index = () => {
           <TabsList className={`grid w-full h-14 p-1 premium-card ${currentUser?.role === 'admin' ? 'grid-cols-4' : 'grid-cols-2'}`}>
             <TabsTrigger 
               value="trade" 
-              className="h-12 text-base font-semibold rounded-xl transition-all duration-300 data-[state=active]:premium-button data-[state=active]:text-primary-foreground"
+              className="h-12 text-sm font-semibold rounded-xl transition-all duration-300 data-[state=active]:premium-button data-[state=active]:text-primary-foreground"
             >
               Trade
             </TabsTrigger>
             <TabsTrigger 
               value="portfolio" 
-              className="h-12 text-base font-semibold rounded-xl transition-all duration-300 data-[state=active]:premium-button data-[state=active]:text-primary-foreground"
+              className="h-12 text-sm font-semibold rounded-xl transition-all duration-300 data-[state=active]:premium-button data-[state=active]:text-primary-foreground"
             >
               Portfolio
             </TabsTrigger>
             {currentUser?.role === 'admin' && (
               <TabsTrigger 
                 value="history" 
-                className="h-12 text-base font-semibold rounded-xl transition-all duration-300 data-[state=active]:premium-button data-[state=active]:text-primary-foreground"
+                className="h-12 text-sm font-semibold rounded-xl transition-all duration-300 data-[state=active]:premium-button data-[state=active]:text-primary-foreground"
               >
                 All Trades
               </TabsTrigger>
@@ -46,7 +46,7 @@ const Index = () => {
             {currentUser?.role === 'admin' && (
               <TabsTrigger 
                 value="admin" 
-                className="h-12 text-base font-semibold rounded-xl transition-all duration-300 data-[state=active]:premium-button data-[state=active]:text-primary-foreground"
+                className="h-12 text-sm font-semibold rounded-xl transition-all duration-300 data-[state=active]:premium-button data-[state=active]:text-primary-foreground"
               >
                 Admin
               </TabsTrigger>

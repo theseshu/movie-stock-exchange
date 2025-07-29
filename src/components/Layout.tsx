@@ -18,10 +18,10 @@ export function Layout({ children }: LayoutProps) {
                 <span className="text-2xl">🎬</span>
               </div>
               <div>
-                <h1 className="text-3xl font-display font-bold premium-text tracking-tight">
+                <h1 className="text-xl font-display font-bold premium-text tracking-tight">
                   MovieStockExchange
                 </h1>
-                <p className="text-muted-foreground text-sm">MSE - Premium Stock Exchange</p>
+                <p className="text-muted-foreground text-xs">MSE - Premium Stock Exchange</p>
               </div>
             </div>
             <div className="flex items-center space-x-4">

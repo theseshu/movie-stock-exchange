@@ -41,7 +41,7 @@ export function UserSelector() {
   return (
     <div className="flex items-center gap-4">
       <div className="flex items-center gap-3">
-        <span className="text-sm font-semibold text-muted-foreground">Current User:</span>
+        <span className="text-xs font-semibold text-muted-foreground">Current User:</span>
         <Select value={currentUser?.id || ''} onValueChange={handleUserChange}>
           <SelectTrigger className="w-48 h-12 premium-card border-border/50 text-foreground font-semibold">
             <SelectValue placeholder="Select user" />
@@ -65,8 +65,8 @@ export function UserSelector() {
       {currentUser && (
         <div className="premium-card px-4 py-2 border-border/30">
           <div className="flex items-center gap-2">
-            <span className="text-sm text-muted-foreground">Balance:</span>
-            <span className="premium-text text-lg font-bold font-mono">
+            <span className="text-xs text-muted-foreground">Balance:</span>
+            <span className="premium-text text-base font-bold font-mono">
               ₹{currentUser.wallet_balance.toFixed(2)}
             </span>
           </div>

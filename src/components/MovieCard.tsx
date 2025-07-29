@@ -38,30 +38,30 @@ export function MovieCard({ movie, onClick }: MovieCardProps) {
         </Badge>
         
         <div className="absolute bottom-4 left-4 right-4">
-          <CardTitle className="font-playfair text-white text-xl font-bold drop-shadow-2xl line-clamp-2 mb-2">
+          <CardTitle className="font-playfair text-white text-lg font-bold drop-shadow-2xl line-clamp-2 mb-2">
             {movie.title}
           </CardTitle>
-          <div className="text-white/80 text-sm">
-            <span className="premium-text font-semibold text-lg">₹{movie.market_price.toFixed(2)}</span>
+          <div className="text-white/80 text-xs">
+            <span className="premium-text font-semibold text-base">₹{movie.market_price.toFixed(2)}</span>
           </div>
         </div>
       </div>
       
       <CardContent className="p-6 space-y-4 bg-gradient-to-br from-card via-card to-accent/5">
         <div className="flex justify-between items-center">
-          <span className="text-sm font-medium text-muted-foreground">Market Price</span>
-          <span className="text-2xl font-bold premium-text font-playfair">₹{movie.market_price.toFixed(2)}</span>
+          <span className="text-xs font-medium text-muted-foreground">Market Price</span>
+          <span className="text-xl font-bold premium-text font-playfair">₹{movie.market_price.toFixed(2)}</span>
         </div>
         
         <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
         
         <div className="flex justify-between items-center">
-          <span className="text-sm font-medium text-muted-foreground">Total Supply</span>
-          <span className="text-sm font-semibold text-foreground">{movie.total_supply.toLocaleString()} shares</span>
+          <span className="text-xs font-medium text-muted-foreground">Total Supply</span>
+          <span className="text-xs font-semibold text-foreground">{movie.total_supply.toLocaleString()} shares</span>
         </div>
         
         {movie.description && (
-          <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
+          <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">
             {movie.description}
           </p>
         )}

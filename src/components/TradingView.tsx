@@ -84,11 +84,11 @@ export function TradingView() {
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto premium-card border-border/50">
           <DialogHeader className="border-b border-border/30 pb-6">
-            <DialogTitle className="text-3xl font-playfair font-bold premium-text">
+            <DialogTitle className="text-2xl font-playfair font-bold premium-text">
               Trade {selectedMovie?.title} ({selectedMovie?.symbol})
             </DialogTitle>
-            <p className="text-muted-foreground text-lg">
-              Current Price: <span className="premium-text font-semibold text-xl">₹{selectedMovie?.market_price.toFixed(2)}</span>
+            <p className="text-muted-foreground text-base">
+              Current Price: <span className="premium-text font-semibold text-lg">₹{selectedMovie?.market_price.toFixed(2)}</span>
             </p>
           </DialogHeader>
           
