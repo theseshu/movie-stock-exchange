@@ -5,7 +5,7 @@ import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { supabase } from '@/integrations/supabase/client';
-import { useUserStore } from '@/hooks/useUser';
+import { useAuth } from '@/components/AuthProvider';
 import { Movie } from '@/types';
 import { useToast } from '@/hooks/use-toast';
 
@@ -22,7 +22,7 @@ export function OrderForm({ movie, onOrderPlaced, selectedPrice, selectedOrderTy
   const [price, setPrice] = useState(movie.market_price.toString());
   const [quantity, setQuantity] = useState('');
   const [loading, setLoading] = useState(false);
-  const { currentUser } = useUserStore();
+  const { user } = useAuth();
   const { toast } = useToast();
 
   // Handle price selection from market depth
@@ -37,10 +37,10 @@ export function OrderForm({ movie, onOrderPlaced, selectedPrice, selectedOrderTy
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!currentUser) {
+    if (!user) {
       toast({
         title: "Error",
-        description: "Please select a user first",
+        description: "Please sign in to place orders",
         variant: "destructive"
       });
       return;
@@ -61,7 +61,7 @@ export function OrderForm({ movie, onOrderPlaced, selectedPrice, selectedOrderTy
       const { error } = await supabase
         .from('orders')
         .insert({
-          user_id: currentUser.id,
+          user_id: user.id,
           movie_id: movie.id,
           order_type: orderType,
           price: parseFloat(price),

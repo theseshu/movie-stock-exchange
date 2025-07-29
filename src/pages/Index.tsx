@@ -1,13 +1,60 @@
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Layout } from '@/components/Layout';
 import { TradingView } from '@/components/TradingView';
 import { Portfolio } from '@/components/Portfolio';
 import { AdminPanel } from '@/components/AdminPanel';
 import { TradeHistory } from '@/components/TradeHistory';
-import { useUserStore } from '@/hooks/useUser';
+import { useAuth } from '@/components/AuthProvider';
+import { supabase } from '@/integrations/supabase/client';
 
 const Index = () => {
-  const { currentUser } = useUserStore();
+  const { user, loading } = useAuth();
+  const navigate = useNavigate();
+  const [userProfile, setUserProfile] = useState<any>(null);
+
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate('/auth');
+    }
+  }, [user, loading, navigate]);
+
+  useEffect(() => {
+    if (user) {
+      fetchUserProfile();
+    }
+  }, [user]);
+
+  const fetchUserProfile = async () => {
+    if (!user) return;
+    
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', user.id)
+      .single();
+      
+    if (error) {
+      console.error('Error fetching user profile:', error);
+    } else {
+      setUserProfile(data);
+    }
+  };
+
+  if (loading) {
+    return (
+      <Layout>
+        <div className="flex items-center justify-center min-h-[400px]">
+          <div className="text-lg">Loading...</div>
+        </div>
+      </Layout>
+    );
+  }
+
+  if (!user) {
+    return null; // Will redirect to auth
+  }
   
   return (
     <Layout>
@@ -22,7 +69,7 @@ const Index = () => {
         </div>
         
         <Tabs defaultValue="trade" className="w-full">
-          <TabsList className={`grid w-full h-14 p-1 premium-card ${currentUser?.role === 'admin' ? 'grid-cols-4' : 'grid-cols-2'}`}>
+          <TabsList className={`grid w-full h-14 p-1 premium-card ${userProfile?.role === 'admin' ? 'grid-cols-4' : 'grid-cols-2'}`}>
             <TabsTrigger 
               value="trade" 
               className="h-12 text-sm font-semibold rounded-xl transition-all duration-300 data-[state=active]:premium-button data-[state=active]:text-primary-foreground"
@@ -35,7 +82,7 @@ const Index = () => {
             >
               Portfolio
             </TabsTrigger>
-            {currentUser?.role === 'admin' && (
+            {userProfile?.role === 'admin' && (
               <TabsTrigger 
                 value="history" 
                 className="h-12 text-sm font-semibold rounded-xl transition-all duration-300 data-[state=active]:premium-button data-[state=active]:text-primary-foreground"
@@ -43,7 +90,7 @@ const Index = () => {
                 All Trades
               </TabsTrigger>
             )}
-            {currentUser?.role === 'admin' && (
+            {userProfile?.role === 'admin' && (
               <TabsTrigger 
                 value="admin" 
                 className="h-12 text-sm font-semibold rounded-xl transition-all duration-300 data-[state=active]:premium-button data-[state=active]:text-primary-foreground"
@@ -61,13 +108,13 @@ const Index = () => {
             <Portfolio />
           </TabsContent>
           
-          {currentUser?.role === 'admin' && (
+          {userProfile?.role === 'admin' && (
             <TabsContent value="history" className="mt-8">
               <TradeHistory />
             </TabsContent>
           )}
           
-          {currentUser?.role === 'admin' && (
+          {userProfile?.role === 'admin' && (
             <TabsContent value="admin" className="mt-8">
               <AdminPanel />
             </TabsContent>
